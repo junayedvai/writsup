@@ -27,9 +27,9 @@ gaslightCTF{p14n0_1n_r0bl0x_1s_h4rd}
 
 ## Beginner Summary
 
-The challenge gave us a WAV audio file. At first, it sounds like a normal piano version of **Wavin' Flag**, but the ending sounds strange.
+The challenge gives a WAV audio file. At first, it sounds like a normal piano version of **Wavin' Flag**, but the ending sounds strange.
 
-The most important clue is the filename:
+The important filename is:
 
 ```text
 ttyut-iiiuy+12.wav
@@ -45,13 +45,13 @@ Tune it
 
 So the correct idea is to tune the audio **down by 12 semitones**, inspect the strange ending, and map the piano notes to Roblox / Virtual Piano keyboard keys.
 
-After mapping the notes, the message becomes:
+After mapping the notes, the hidden message becomes:
 
 ```text
 p14n0 1n r0bl0x 1s h4rd
 ```
 
-Spaces are not allowed in the flag, so spaces were replaced with underscores:
+Because spaces are not allowed in the flag, spaces are replaced with underscores:
 
 ```text
 gaslightCTF{p14n0_1n_r0bl0x_1s_h4rd}
@@ -59,25 +59,19 @@ gaslightCTF{p14n0_1n_r0bl0x_1s_h4rd}
 
 ---
 
-## Screenshots
+## Screenshot
 
-### Sonic Visualiser Spectrogram
+### Ending Spectrogram
 
 ![Ending spectrogram](screenshots/ending_spectrogram.png)
 
-If available, this screenshot shows the tuned-down ending in spectrogram view. The bright horizontal lines are piano notes.
-
-### Manual Screenshot
-
-![Manual screenshot](screenshots/manual_screenshot.png)
-
-This is optional. It can show Audacity or Sonic Visualiser during the solve process.
+This screenshot shows the tuned-down ending as a spectrogram. The bright horizontal lines represent piano notes.
 
 ---
 
 ## Step 1: Check the File Type
 
-First, check what kind of file we have:
+First, check the file type:
 
 ```bash
 file "ttyut-iiiuy+12.wav"
@@ -89,7 +83,7 @@ Output:
 RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, stereo 44100 Hz
 ```
 
-This confirms it is a normal WAV audio file.
+This confirms the file is a normal WAV audio file.
 
 ---
 
@@ -112,16 +106,16 @@ Title    : Wavin' Flag
 Game ID  : 5593470048
 ```
 
-These fields give important clues:
+The metadata gives useful clues:
 
 | Metadata | Meaning |
 |---|---|
 | `Title: Wavin' Flag` | The song is Wavin' Flag |
-| `Piano: Imperial V2` | The audio is related to piano notes |
+| `Piano: Imperial V2` | The audio is related to piano |
 | `Game ID: 5593470048` | Points toward Roblox Visual Pianos |
-| `Comment` | A decoy/hint that the music was modified |
+| `Comment` | Hint/decoy that the music was modified |
 
-The metadata comment looks suspicious, but it is not the flag.
+The comment looks suspicious, but it is not the flag.
 
 ---
 
@@ -236,7 +230,7 @@ Open the ending:
 sonic-visualiser ending.wav
 ```
 
-Then:
+Then add a spectrogram:
 
 ```text
 Pane → Add Spectrogram
@@ -296,7 +290,7 @@ After tuning down, the ending notes are:
 A4  C2  F2  B6  E3     C2  B6     B3  E3  A6  C6  E3  E6     C2  C5     G5  F2  B3  D5
 ```
 
-The needed mapping table:
+Mapping table:
 
 | Piano Note | Keyboard Key |
 |---|---|
@@ -313,72 +307,34 @@ The needed mapping table:
 | A6 | `b` |
 | B6 | `n` |
 
-Now decode:
+Decoded:
 
 ```text
 A4  C2  F2  B6  E3
 p   1   4   n   0
 ```
 
-This gives:
-
-```text
-p14n0
-```
-
-Next:
-
 ```text
 C2  B6
 1   n
 ```
-
-This gives:
-
-```text
-1n
-```
-
-Next:
 
 ```text
 B3  E3  A6  C6  E3  E6
 r   0   b   l   0   x
 ```
 
-This gives:
-
-```text
-r0bl0x
-```
-
-Next:
-
 ```text
 C2  C5
 1   s
 ```
-
-This gives:
-
-```text
-1s
-```
-
-Finally:
 
 ```text
 G5  F2  B3  D5
 h   4   r   d
 ```
 
-This gives:
-
-```text
-h4rd
-```
-
-The hidden message is:
+So the hidden message is:
 
 ```text
 p14n0 1n r0bl0x 1s h4rd
